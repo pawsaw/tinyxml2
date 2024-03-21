@@ -45,6 +45,7 @@ jobs:
         -v /tmp/build_output:/tmp/build_output \
         tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
+        --test_verbose_timeout_warnings \
         test \
         //:xmltest --config=linux --config=clang --config=stdlib
       # If the build or tests fail, the job stops, and the workflow will report failure.
