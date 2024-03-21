@@ -1,4 +1,4 @@
-name: Bazel Build CI
+name: Build and Test tinyxml2 with Bazel
 
 on:
   push:
@@ -13,10 +13,10 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build Docker Image tinyxml2-bazel
       run: docker build . -t tinyxml2-bazel
+    - name: Create Build Output Directory
+      run: mkdir -p /tmp/build_output
     - name: Build //:tinyxml2
       run: |
-        docker build . -t tinyxml2-bazel
-        mkdir -p /tmp/build_output
         docker run --rm -v ${{ github.workspace }}:/workspace \
         -v /tmp/build_output:/tmp/build_output tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
@@ -31,8 +31,6 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build and Run //:xmltest
       run: |
-        docker build . -t tinyxml2-bazel
-        mkdir -p /tmp/build_output
         docker run --rm -v ${{ github.workspace }}:/workspace \
         -v /tmp/build_output:/tmp/build_output tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
