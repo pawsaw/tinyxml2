@@ -17,11 +17,14 @@ jobs:
       run: mkdir -p /tmp/build_output
     - name: Build //:tinyxml2
       run: |
-        docker run --rm -v ${{ github.workspace }}:/workspace \
-        -v /tmp/build_output:/tmp/build_output tinyxml2-bazel \
+        docker run --rm \
+        -e USER="$(id -u)" \
+        -u="$(id -u)" \
+        -v ${{ github.workspace }}:/workspace \
+        -v /tmp/build_output:/tmp/build_output \
+        tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
-        test \
-        //:xmltest --config=linux --config=clang --config=stdlib
+        build //:xmltest --config=linux --config=clang --config=stdlib
       # If the build fails, the job stops, and the workflow will report failure.
 
   test-xmltest:
@@ -31,8 +34,12 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build and Run //:xmltest
       run: |
-        docker run --rm -v ${{ github.workspace }}:/workspace \
-        -v /tmp/build_output:/tmp/build_output tinyxml2-bazel \
+        docker run --rm \
+        -e USER="$(id -u)" \
+        -u="$(id -u)" \
+        -v ${{ github.workspace }}:/workspace \
+        -v /tmp/build_output:/tmp/build_output \
+        tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
         test \
         //:xmltest --config=linux --config=clang --config=stdlib
