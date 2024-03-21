@@ -2,9 +2,9 @@ name: Build and Test tinyxml2
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   build-tinyxml2:
@@ -48,6 +48,7 @@ jobs:
         --output_user_root=/tmp/build_output \
         test \
         --test_verbose_timeout_warnings \
+        --test_output=all \
         //:xmltest --config=linux --config=clang --config=stdlib
 
 
