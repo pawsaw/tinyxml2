@@ -1,3 +1,9 @@
+filegroup(
+    name = "clang_tidy_config",
+    srcs = [".clang-tidy"],
+    visibility = ["//visibility:public"],
+)
+
 cc_library(
     name = "tinyxml2",
     srcs = ["src/tinyxml2.cpp"],

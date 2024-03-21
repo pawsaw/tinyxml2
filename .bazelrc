@@ -9,3 +9,12 @@ build:stdcpp --action_env=BAZEL_CXXOPTS="-stdlib=libstdc++"
 build:linux --platforms=//build_platforms:linux_x86_64
 build:mac --platforms=//build_platforms:macos_x86_64
 build:windows --platforms=//build_platforms:windows_x86_64
+
+#### clang-tidy #####
+
+# Required for bazel_clang_tidy to operate as expected
+build:clang-tidy --aspects @bazel_clang_tidy//clang_tidy:clang_tidy.bzl%clang_tidy_aspect
+build:clang-tidy --output_groups=report
+
+# Optionally override the .clang-tidy config file target
+build:clang-tidy --@bazel_clang_tidy//:clang_tidy_config=//:clang_tidy_config

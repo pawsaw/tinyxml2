@@ -27,9 +27,31 @@ jobs:
         --output_user_root=/tmp/build_output \
         build //:xmltest --config=linux --config=clang --config=stdlib
 
+  check-tinyxml2:
+    name: Check (clang-tidy) tinyxml2
+    needs: build-tinyxml2
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Docker Image tinyxml2-bazel
+      run: docker build . -t tinyxml2-bazel
+    - name: Create Build Output Directory
+      run: mkdir -p /tmp/build_output
+    - name: Build //:tinyxml2
+      run: |
+        docker run --rm \
+        -e USER="$(id -u)" \
+        -u="$(id -u)" \
+        -v ${{ github.workspace }}:/workspace \
+        -v /tmp/build_output:/tmp/build_output \
+        tinyxml2-bazel \
+        --output_user_root=/tmp/build_output \
+        build //:xmltest --config=linux --config=clang --config=stdlib --config clang-tidy
+
   test-tinyxml2:
     name: Test tinyxml2
-    needs: build-tinyxml2
+    needs: check-tinyxml2
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4

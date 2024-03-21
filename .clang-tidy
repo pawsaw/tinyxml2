@@ -1,0 +1,23 @@
+Checks: >
+  *,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-macro-usage,
+  -fuchsia-*,
+  -google-runtime-references,
+  -hicpp-no-array-decay,
+  -llvm-header-guard,
+  -llvm-include-order,
+  -misc-misplaced-const,
+  -modernize-use-trailing-return-type,
+  -readability-magic-numbers,
+  -readability-named-parameter,
+  -google-readability-todo,
+  -readability-braces-around-statements,
+  -readability-else-after-return,
+  -modernize-pass-by-value
+
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
+FormatStyle: 'none'

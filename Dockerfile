@@ -3,12 +3,15 @@
 FROM gcr.io/bazel-public/bazel:7.1.0
 
 # Install both g++ and clang compilers
+# Install the libc++-dev package
+# Install clang-tidy
 USER root
 RUN apt-get update && apt-get install -y \
     build-essential \
     g++ \
     clang \
     libc++-dev \
+    clang-tidy \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace
