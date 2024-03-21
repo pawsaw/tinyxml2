@@ -10,7 +10,7 @@ jobs:
   build-tinyxml2:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build Docker Image tinyxml2-bazel
       run: docker build . -t tinyxml2-bazel
     - name: Build //:tinyxml2
@@ -28,7 +28,7 @@ jobs:
     needs: build-tinyxml2
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build and Run //:xmltest
       run: |
         docker build . -t tinyxml2-bazel
