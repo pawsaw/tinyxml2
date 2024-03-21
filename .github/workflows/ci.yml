@@ -1,0 +1,50 @@
+name: Bazel Build CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-tinyxml2:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build Docker Image tinyxml2-bazel
+      run: docker build . -t tinyxml2-bazel
+    - name: Build //:tinyxml2
+      run: |
+        docker build . -t tinyxml2-bazel
+        mkdir -p /tmp/build_output
+        docker run --rm -v ${{ github.workspace }}:/workspace \
+        -v /tmp/build_output:/tmp/build_output tinyxml2-bazel \
+        --output_user_root=/tmp/build_output \
+        test \
+        //:xmltest --config=linux --config=clang --config=stdlib
+      # If the build fails, the job stops, and the workflow will report failure.
+
+  test-xmltest:
+    needs: build-tinyxml2
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build and Run //:xmltest
+      run: |
+        docker build . -t tinyxml2-bazel
+        mkdir -p /tmp/build_output
+        docker run --rm -v ${{ github.workspace }}:/workspace \
+        -v /tmp/build_output:/tmp/build_output tinyxml2-bazel \
+        --output_user_root=/tmp/build_output \
+        test \
+        //:xmltest --config=linux --config=clang --config=stdlib
+      # If the build or tests fail, the job stops, and the workflow will report failure.
+
+  merge-pull-request:
+    if: github.event_name == 'pull_request' && success()
+    needs: [test-xmltest]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder for Merge Conditions
+        run: echo "This step would contain scripts or actions to merge the PR after successful builds and tests."
+      # Actual merging should be done carefully, potentially with custom scripting and GitHub's API, or manually.

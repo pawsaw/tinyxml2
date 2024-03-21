@@ -26,3 +26,4 @@ bazel-bin
 bazel-out
 bazel-testlogs
 bazel-tinyxml2
+bazel-workspace
