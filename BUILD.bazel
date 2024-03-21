@@ -23,4 +23,5 @@ cc_test(
     srcs = ["src/xmltest.cpp"],
     deps = [":tinyxml2"],
     data = ["//resources:test_resources"],
+    timeout = "short",
 )

@@ -47,6 +47,7 @@ jobs:
         tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
         test \
+        --test_verbose_timeout_warnings \
         //:xmltest --config=linux --config=clang --config=stdlib
-        
+
 
