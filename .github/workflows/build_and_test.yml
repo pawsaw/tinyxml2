@@ -27,11 +27,15 @@ jobs:
         build //:xmltest --config=linux --config=clang --config=stdlib
       # If the build fails, the job stops, and the workflow will report failure.
 
-  test-xmltest:
+  test-tinyxml2:
     needs: build-tinyxml2
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Build Docker Image tinyxml2-bazel
+      run: docker build . -t tinyxml2-bazel
+    - name: Create Build Output Directory
+      run: mkdir -p /tmp/build_output
     - name: Build and Run //:xmltest
       run: |
         docker run --rm \
@@ -45,11 +49,3 @@ jobs:
         //:xmltest --config=linux --config=clang --config=stdlib
       # If the build or tests fail, the job stops, and the workflow will report failure.
 
-  merge-pull-request:
-    if: github.event_name == 'pull_request' && success()
-    needs: [test-xmltest]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Placeholder for Merge Conditions
-        run: echo "This step would contain scripts or actions to merge the PR after successful builds and tests."
-      # Actual merging should be done carefully, potentially with custom scripting and GitHub's API, or manually.
