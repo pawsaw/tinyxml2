@@ -1,10 +1,7 @@
-
-
-
 cc_library(
     name = "tinyxml2",
-    srcs = ["tinyxml2.cpp"],
-    hdrs = ["tinyxml2.h"],
+    srcs = ["src/tinyxml2.cpp"],
+    hdrs = ["src/tinyxml2.h"],
     visibility = ["//visibility:public"],
     copts = select({
         "//conditions:default": [],
@@ -23,7 +20,7 @@ cc_library(
 
 cc_test(
     name = "xmltest",
-    srcs = ["xmltest.cpp"],
+    srcs = ["src/xmltest.cpp"],
     deps = [":tinyxml2"],
     data = ["//resources:test_resources"],
 )
