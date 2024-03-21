@@ -1,4 +1,4 @@
-name: Build and Test tinyxml2 with Bazel
+name: Build and Test tinyxml2
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   build-tinyxml2:
+    name: Build tinyxml2
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -25,9 +26,9 @@ jobs:
         tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
         build //:xmltest --config=linux --config=clang --config=stdlib
-      # If the build fails, the job stops, and the workflow will report failure.
 
   test-tinyxml2:
+    name: Test tinyxml2
     needs: build-tinyxml2
     runs-on: ubuntu-latest
     steps:
@@ -45,8 +46,7 @@ jobs:
         -v /tmp/build_output:/tmp/build_output \
         tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
-        --test_verbose_timeout_warnings \
         test \
         //:xmltest --config=linux --config=clang --config=stdlib
-      # If the build or tests fail, the job stops, and the workflow will report failure.
+        
 
