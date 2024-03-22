@@ -180,3 +180,37 @@ Feel free to use additional `--config=...` options:
 | g++      | \-                   | `--config=gcc`    |
 | \-       | libc++               | `--config=stdlib` |
 | \-       | libstdc++            | `--config=stdcpp` |
+
+# CI with GitHub and GitHub Actions
+
+
+## Git branching concept
+
+The following GitHub workflow is configured for this project.
+
+Branches:
+| Branch                | Description                                                                                       | 
+| --------------------- | ------------------------------------------------------------------------------------------------- |
+| `main`                | release branch                                                                                    |
+| `develop`             | the current development branch. The developer makes a pull-request `develop` ➔ `main` at release  |
+| `feat/<feature-name>` | branched off from develop. The developer makes a pull-request `feat/<feature-name>` ➔ `develop`   |
+
+**The direct merge or rebase to `main` and `develop` is prohibited.**
+
+The merge of a pull request is only possible if the ***Build and Test tinyxml2 GitHub Workflow*** runs successfully.
+
+## Build and Test tinyxml2 GitHub Workflow
+
+With every pull-request on `main` or `develop`, the *Build and Test tinyxml2 GitHub Actions workflow* is triggered.
+
+This consists of three consecutive jobs, which are described below:
+
+| name                        | description                                                                                       | required to succeed | depends on                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------- | ------------------- | --------------------------- |
+| Build tinyxml2              | Builds the tinyxml2 library                                                                       | yes                 | \-                          |
+| Check (clang-tidy) tinyxml2 | Runs clang-tidy, finds code smells and checks the style                                           | no                  | Build tinyxml2              |
+| Test tinyxml2               | Tests the library tinyxml2 using several sample XML files as provided in the resources directory. | yes                 | Check (clang-tidy) tinyxml2 |
+
+The graphic below shows a successful workflow.
+
+![Build and Test Workflow](./docs/build_and_test.png)
