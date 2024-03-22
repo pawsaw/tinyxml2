@@ -4,3 +4,12 @@
 #
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
+
+module(
+    # Name of the module
+    name = "tinyxml2",
+    # Version of the module
+    version = "10.0.0",
+    # Compatibility versions can also be included if necessary
+    compatibility_level = 1,
+)

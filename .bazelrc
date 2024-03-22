@@ -18,3 +18,21 @@ build:clang-tidy --output_groups=report
 
 # Optionally override the .clang-tidy config file target
 build:clang-tidy --@bazel_clang_tidy//:clang_tidy_config=//:clang_tidy_config
+
+#### debug and release configurations #####
+
+# Default build options
+build --define=env=prod
+
+# Debug build configuration
+build:debug --//build_settings:debug=true
+build:debug --compilation_mode=dbg
+build:debug --cxxopt=-g
+build:debug --cxxopt=-O0
+
+# Release build configuration
+build:release --//build_settings:debug=false
+build:release --compilation_mode=opt
+build:release --cxxopt=-O2
+build:release --define=env=prod
+
