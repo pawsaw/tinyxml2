@@ -112,9 +112,17 @@ However, it is possible to select a different Compiler or C++ Standard Library i
 | \-       | libc++               | `--config=stdlib` |
 | \-       | libstdc++            | `--config=stdcpp` |
 
+
+The *debug* and *release* flavors are also supported.
+
+| Flavor  | Activated Compiler Flags | Additions                                                                           | Bazel Option       |
+| ------- | ------------------------ | ----------------------------------------------------------------------------------- | ------------------ |
+| debug   | \-g -O0                  | Activates additional TINYXML2_DEBUG Preprocessor flag for additonal debug messages. | `--config=debug`   |
+| release | \-O2                     | \-                                                                                  | `--config=release` |                    |
+
 Full example:
 ```sh
-bazel build //:tinyxml2 --config=linux --config=clang --config=stdlib
+bazel build //:tinyxml2 --config=linux --config=clang --config=stdlib --config=release
 ```
 
 ## Dockerized Build
@@ -180,6 +188,13 @@ Feel free to use additional `--config=...` options:
 | g++      | \-                   | `--config=gcc`    |
 | \-       | libc++               | `--config=stdlib` |
 | \-       | libstdc++            | `--config=stdcpp` |
+
+The *debug* and *release* flavors are also supported:
+
+| Flavor  | Bazel Option       |
+| ------- | ------------------ |
+| debug   | `--config=debug`   |
+| release | `--config=release` |   
 
 # CI with GitHub and GitHub Actions
 
