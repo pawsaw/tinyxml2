@@ -25,7 +25,7 @@ jobs:
         -v /tmp/build_output:/tmp/build_output \
         tinyxml2-bazel \
         --output_user_root=/tmp/build_output \
-        build //:xmltest --config=linux --config=clang --config=stdlib
+        build //:xmltest --config=linux --config=clang --config=stdlib --config=release
 
   check-tinyxml2:
     name: Check (clang-tidy) tinyxml2
